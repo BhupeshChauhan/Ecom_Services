@@ -1,4 +1,9 @@
 name = "communication-service"
-main = "src/worker.js"
+main = "src/index.ts"
 compatibility_date = "2024-10-23"
 workers_dev = true
+
+[vars]
+SENDGRID_API_KEY = "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"
+SENDGRID_SENDER_EMAIL="interview-support@hireomatic.com"
+SENDGRID_URL="https://api.sendgrid.com/v3/mail/send"

@@ -8,6 +8,11 @@
     "start": "wrangler dev"
   },
   "devDependencies": {
-    "wrangler": "^3.60.3"
+    "wrangler": "^3.60.3",
+    "typescript": "^5.5.2"
+  },
+  "dependencies": {
+    "hono": "^4.6.6",
+    "@sendgrid/mail": "^8.1.3"
   }
 }
