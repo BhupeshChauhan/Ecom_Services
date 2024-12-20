@@ -3,6 +3,7 @@ import { welcomeEmail } from "./welcomeEmail";
 import { cancelInvite } from "./cancelInvite";
 import { resetPassword } from "./resetPassword";
 import { verifyEmail } from "./verifyEmail";
+import { teamInvite } from "./teamInvite";
 
 export {
     welcomeEmail,
@@ -10,4 +11,5 @@ export {
     cancelInvite,
     resetPassword,
     verifyEmail,
+    teamInvite
 }

@@ -1,5 +1,4 @@
-export const resetPassword = `
-<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
+export const teamInvite = `<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
   <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
@@ -264,12 +263,12 @@ a.es-button, button.es-button {
                                               </p>
                                               <p>
                                                 <br>
-                                                We received a request to reset your <b>{{companyName}}</b> account password. If this was you, please click the link below to set up a new password:
+                                                <b>{{senderName}}</b> from <b>{{companyName}}</b> has sent you an invite to join our platform. To get started, please verify your email address by clicking the link below:
                                               </p>
                                               <p>
                                                 <br>
-                                                <a href="{{resetPasswordLink}}"><u>{{resetPasswordLink}}</u></a><br>
-                                                <br>If you didn’t request this, you can safely ignore this email. Your password will remain unchanged.
+                                                <a href="{{invitationLink}}"><u>{{invitationLink}}</u></a><br>
+                                                <br>If you did not expect this invitation, feel free to ignore this email.
                                               </p>
                                             </td>
                                           </tr>

@@ -260,7 +260,7 @@ a.es-button, button.es-button {
                                           <tr>
                                             <td align="left" class="esd-block-text es-p5t es-p5b">
                                               <p style="margin-top: 20px;">
-                                                Hi, {{userName}}!
+                                                Hi, {{recipientName}}!
                                               </p>
                                               <p>
                                                 <br>
@@ -270,7 +270,7 @@ a.es-button, button.es-button {
                                                
                                                 
                                                 <br>However, while <b>{{companyName}}</b> continues to grow, we look forward to staying in touch if you’re up for it.
-                                                <br>Thank you again and we wish you all the best in your search.                                                 .
+                                                <br>Thank you again and we wish you all the best in your search.
                                               </p>
                                             </td>
                                           </tr>

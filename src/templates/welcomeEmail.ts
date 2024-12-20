@@ -260,7 +260,7 @@ a.es-button, button.es-button {
                                           <tr>
                                             <td align="left" class="esd-block-text es-p5t es-p5b">
                                               <p style="margin-top: 20px;">
-                                                Hi, {{userName}}!
+                                                Hi, {{recipientName}}!
                                               </p>
                                               <p>
                                                 <br>
@@ -269,10 +269,9 @@ a.es-button, button.es-button {
                                               <p>
                                                
                                                 
-                                                <br>To get started, log in to your account here:<br> <a href="{{aiInterviewLink}}"><u>https://develop.hireomaticclient.pages.dev</u></a>
-                                                <br><br>We’ve also prepared a [Getting Started Guide] to help you navigate the platform and maximize its potential for your hiring process.
-                                                
-                                                <br><br>If you need any assistance, our support team is always ready to help. Just reach out at <a href="{{aiInterviewLink}}"><u>support@hireomatic.com</u></a>.
+                                                <br>To get started, log in to your account here:<br> <a href="{{loginLink}}"><u>{{loginLink}}</u></a>
+                                                <br>Your temporary password is <b>{{temporaryPassword}}</b>
+                                                <br><br>If you need any assistance, our support team is always ready to help. Just reach out at <a href="{{supportEmail}}"><u>{{supportEmail}}</u></a>.
                                                 
                                                 <br><br>Looking forward to helping you build your dream team!
                                               </p>

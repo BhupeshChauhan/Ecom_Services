@@ -259,7 +259,7 @@ a.es-button, button.es-button {
                                           <tr>
                                             <td align="left" class="esd-block-text es-p5t es-p5b">
                                               <p style="margin-top: 20px;">
-                                                Hi, {{userName}}!
+                                                Hi, {{recipientName}}!
                                               </p>
                                               <p>
                                                 <br>
@@ -267,7 +267,7 @@ a.es-button, button.es-button {
                                               </p>
                                               <p>
                                                 <br>
-                                                <a href="{{aiInterviewLink}}"><u>https://develop.hireomaticclient.pages.dev/resetPassword</u></a><br>
+                                                <a href="{{verifyEmailLink}}"><u>{{verifyEmailLink}}</u></a><br>
                                                 <br>If you didn't create an account with <b>{{companyName}}</b>, please disregard this message.
                                               </p>
                                             </td>

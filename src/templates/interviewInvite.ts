@@ -31,7 +31,7 @@ body,
 .es-header,
 .es-footer {
   width: 100%;
-  table-layout: fixed !important;
+  table-layout: fixed !0portant;
 }
 p,
 hr {
@@ -259,7 +259,7 @@ a.es-button, button.es-button {
                                           <tr>
                                             <td align="left" class="esd-block-text es-p5t es-p5b">
                                               <p style="margin-top: 20px;">
-                                                Hi, {{candidateName}}!
+                                                Hi, {{recipientName}}!
                                               </p>
                                               <p>
                                                 <br>

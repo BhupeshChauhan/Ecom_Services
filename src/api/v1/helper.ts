@@ -1,88 +1,123 @@
-import { welcomeEmail, interviewInvite, cancelInvite, resetPassword, verifyEmail } from '../../templates';
+import { welcomeEmail, interviewInvite, cancelInvite, resetPassword, verifyEmail, teamInvite } from '../../templates';
+import { ResponseUtility } from '../utils/ResponseUtility';
 
 const sgMail = require('@sendgrid/mail');
 
 export const prepareTemplateAndSendEmail = async (template: string, body: any, c: any) => {
-	console.log('preparing template and sending email');
 	try {
-		let toEmail = '';
+        let fromEmail = "";
+		let toEmail = body.toEmail;
 		let html = '';
 		let subject = '';
 
 		switch (template) {
 			case 'interview-invite':
-				toEmail = body.user.email;
-				subject = `Thank you for applying to ${body.clientDetails.name} | Next Step`;
+                fromEmail = c.env.INTERVIEW_SUPPORT_EMAIL;
+				subject = `Thank you for applying to ${body.companyName} | Next Step`;
 				html = interviewInvite;
 				html = html
-					.replace(/{{candidateName}}/g, body.user.name || body.user.username)
-					.replace(/{{jobRole}}/g, body.jobDetails.title)
-					.replace(/{{aiInterviewLink}}/g, body.interviewLink + '')
+					.replace(/{{recipientName}}/g, body.recipientName)
+					.replace(/{{jobRole}}/g, body.jobRole)
+					.replace(/{{aiInterviewLink}}/g, body.aiInterviewLink + '')
 					.replace(/{{screeningLink}}/g, body.screeningLink + '')
-					.replace(/{{companyName}}/g, body.clientDetails.name);
+					.replace(/{{companyName}}/g, body.companyName);
 
 				break;
 
 			case 'interview-cancel':
-				// Required - userName, jobRole, companyName
-				toEmail = body.user.email;
-				subject = `${body.clientDetails.name} | Application  Follow-Up`;
+				// Required - recipientName, jobRole, companyName, toEmail
+                fromEmail = c.env.INTERVIEW_SUPPORT_EMAIL;
+				subject = `${body.companyName} | Application  Follow-Up`;
 				html = cancelInvite;
+                html = html
+					.replace(/{{recipientName}}/g, body.recipientName)
+					.replace(/{{jobRole}}/g, body.jobRole)
+					.replace(/{{companyName}}/g, body.companyName);
 				break;
 
 			case 'email-verification':
-				//Required - userName, companyName, verifyEmailLink
-				toEmail = body.user.email;
-				subject = `Your interview with ${body.clientDetails.name} has been cancelled`;
+				//Required - recipientName, companyName, verifyEmailLink
+                fromEmail = c.env.SUPPORT_EMAIL;
+				subject = `Verify Your Email Address`;
 				html = verifyEmail;
+                html = html
+					.replace(/{{recipientName}}/g, body.recipientName)
+					.replace(/{{companyName}}/g, body.companyName)
+					.replace(/{{verifyEmailLink}}/g, body.verifyEmailLink);
 				break;
 
 			case 'password-reset':
-				//Required - userName, companyName, resetPasswordLink
-				toEmail = body.user.email;
-				subject = `Your interview with ${body.clientDetails.name} has been cancelled`;
+				//Required - recipientName, companyName, resetPasswordLink
+                fromEmail = c.env.SUPPORT_EMAIL;
+				subject = `Reset Your Password`;
 				html = resetPassword;
+                html = html
+					.replace(/{{recipientName}}/g, body.recipientName)
+					.replace(/{{companyName}}/g, body.companyName)
+					.replace(/{{resetPasswordLink}}/g, body.resetPasswordLink);
 				break;
 
 			case 'welcome-email':
-                //Required - userName, companyName, loginLink, supportEmail
-				toEmail = body.user.email;
-				subject = `Your interview with ${body.clientDetails.name} has been cancelled`;
+				//Required - recipientName, companyName, loginLink, temporaryPassword, supportEmail
+                fromEmail = c.env.SUPPORT_EMAIL;
+				subject = `Welcome to ${body.companyName} - Let's Revolutionize Your Hiring Process!`;
 				html = welcomeEmail;
+                html = html
+					.replace(/{{recipientName}}/g, body.recipientName)
+					.replace(/{{companyName}}/g, body.companyName)
+					.replace(/{{loginLink}}/g, body.loginLink)
+					.replace(/{{temporaryPassword}}/g, body.temporaryPassword)
+                    .replace(/{{supportEmail}}/g, c.env.SUPPORT_EMAIL);
 				break;
+
+            case 'team-invite':
+                fromEmail = c.env.SUPPORT_EMAIL;
+				subject = `${body.companyName} | Team Invite`;
+				html = teamInvite;
+                html = html
+					.replace(/{{recipientName}}/g, body.recipientName)
+					.replace(/{{companyName}}/g, body.companyName)
+					.replace(/{{invitationLink}}/g, body.invitationLink)
+                    .replace(/{{senderName}}/g, body.senderName);    
 
 			default:
 				//do nothing
 				break;
 		}
 
-		await sendEmail(toEmail, subject, html, c);
+		await sendEmailWithSendgrid(fromEmail, toEmail, subject, html, c);
+        return ResponseUtility.ok({}, 'Email Sent Successfully');
 	} catch (error: any) {
 		console.log('Error sending email:', error);
-		throw new Error(`Failed to send email. Error: ${error}`);
+        return ResponseUtility.internalServerError(`Failed to send email. Error: ${error.message}`);
 	}
 };
 
-export const sendEmail = async (toEmail, subject, html, c) => {
-	sgMail.setApiKey(c.env.SG_API_KEY);
+export const sendEmailWithSendgrid = async (fromEmail, toEmail, subject, html, c) => {
+	try {
+		sgMail.setApiKey(c.env.SG_API_KEY);
 
-	console.log('Sending email to ', toEmail);
+		console.log('Sending email to ', toEmail);
 
-	let msg: any = {
-		to: toEmail,
-		from: c.env.SENDGRID_SENDER_EMAIL,
-		subject: subject,
-		html: html,
-		trackingSettings: {
-			clickTracking: {
-				enable: false,
-				enableText: false,
+		let msg: any = {
+			to: toEmail,
+			from: fromEmail,
+			subject: subject,
+			html: html,
+			trackingSettings: {
+				clickTracking: {
+					enable: false,
+					enableText: false,
+				},
+				subscriptionTracking: {
+					enable: false,
+				},
 			},
-			subscriptionTracking: {
-				enable: false,
-			},
-		},
-	};
+		};
 
-	await sgMail.send(msg);
+		await sgMail.send(msg);
+		return ResponseUtility.ok(null, 'Email Sent Successfully');
+	} catch (error: any) {
+		return ResponseUtility.internalServerError(error.message);
+	}
 };

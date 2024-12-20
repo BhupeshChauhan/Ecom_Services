@@ -5,26 +5,25 @@ import { prepareTemplateAndSendEmail } from './helper';
 type Bindings = {
 	JWT_SECRET: string;
 	SENDGRID_API_KEY: string;
-	SENDGRID_SENDER_EMAIL: string;
 	SENDGRID_URL: string;
+	SG_API_KEY:string;
+	INTERVIEW_SUPPORT_EMAIL: string;
+	SUPPORT_EMAIL: string;
 };
 
 const v1 = new Hono<{ Bindings: Bindings }>();
 
 export const sendEmail = async (c: any) => {
-	const body = await c.req.json();
-	const { template, data } = body; //"interview-invite"
+	const postBody = await c.req.json();
+	const { template, body } = postBody; //"interview-invite"
 	try {
-		await prepareTemplateAndSendEmail(template, data, c);
+		console.log("Send Email got called", template)
+		await prepareTemplateAndSendEmail(template, body, c);
 
-		ResponseUtility.ok(null, 'Email sent successfully');
+		return ResponseUtility.ok(null, 'Email sent successfully');
 	} catch (error: any) {
-		ResponseUtility.internalServerError(error.message);
+		return ResponseUtility.internalServerError(error.message);
 	}
 };
 
-export const testAPI = async (c: any) => {
-	// await prepareTemplateAndSendEmail({name:"Aaleen", email:"aaleen@technest.ventures"}, {title:"React Developer"}, {name:"Uplers"}, "https://www.google.com", "https://www.google.com", 'interview-invite', c);
-	// return ResponseUtility.ok(null, 'Test API called successfully');
-};
 export default v1;
