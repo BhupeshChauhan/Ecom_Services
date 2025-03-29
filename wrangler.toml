@@ -6,12 +6,12 @@ node_compat = true
 workers_dev = true
 
 [vars]
-SENDGRID_API_KEY = "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"
+SENDGRID_API_KEY = "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"
 SENDGRID_URL="https://api.sendgrid.com/v3/mail/send"
-SG_API_KEY="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"
+SG_API_KEY="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"
 
-INTERVIEW_SUPPORT_EMAIL="interview-support@hireomatic.com"
-SUPPORT_EMAIL="support@hireomatic.com"
+INTERVIEW_SUPPORT_EMAIL="interview-support@dashflowx.com"
+SUPPORT_EMAIL="support@dashflowx.com"
 
 [placement]
 mode = "smart"
