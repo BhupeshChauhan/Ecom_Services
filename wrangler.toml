@@ -1,17 +1,9 @@
-name = "communication-service"
+name = "app-service"
 main = "src/index.ts"
 compatibility_date = "2024-10-23"
 #compatibility_flags = ["nodejs_compat"]
 node_compat = true
 workers_dev = true
-
-[vars]
-SENDGRID_API_KEY = "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"
-SENDGRID_URL="https://api.sendgrid.com/v3/mail/send"
-SG_API_KEY="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"
-
-INTERVIEW_SUPPORT_EMAIL="interview-support@dashflowx.com"
-SUPPORT_EMAIL="support@dashflowx.com"
 
 [placement]
 mode = "smart"
@@ -19,3 +11,18 @@ mode = "smart"
 [observability]
 enabled = true
 head_sampling_rate = 1
+
+[[d1_databases]]
+binding = "DB"
+database_name = "prod_db"
+database_id = "c1f43e27-741c-43dd-86df-20426fb5fbd5"
+
+[[kv_namespaces]]
+binding = "AUTH_KV"
+id = "4c0672cc49d44ea4bc4565966d4d468f"
+#preview_id = "b0c935f73e9c471b888558ebd31b2883"
+
+[[kv_namespaces]]
+binding = "LOG_LEVEL"
+id = "2b7510eefb704a17a7c569b40a01d6d6"
+#preview_id = "f74391074ce84219a08750a20173a59a"
