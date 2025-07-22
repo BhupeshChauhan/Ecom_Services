@@ -1,9 +1,18 @@
 import { Hono } from 'hono';
-import { sendEmail } from './v1/communication';
+import { authMiddleware, adminMiddleware } from 'common/src/utils/authUtil';
+import * as app from './v1/app';
+import * as product from './v1/product';
+const appRoutes = new Hono();
 
-const communicationRoutes = new Hono();
+appRoutes.get('/apps', authMiddleware, app.listApps)
+appRoutes.post('/apps', authMiddleware, app.createApp)
+appRoutes.put('/apps/:id', authMiddleware, app.updateApp)
+appRoutes.put('/apps/:id/toggle-status', authMiddleware, app.toggleAppStatus)
 
-communicationRoutes.post('/send-email', sendEmail);
+appRoutes.get('/products', authMiddleware, product.listProducts)
+appRoutes.post('/products', authMiddleware, product.createProduct)
+appRoutes.put('/products/:id', authMiddleware, product.updateProduct)
+appRoutes.put('/products/:id/toggle-status', authMiddleware, product.toggleProductStatus)
 
 
-export default communicationRoutes;
+export default appRoutes;

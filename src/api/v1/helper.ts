@@ -1,7 +1,4 @@
-import { welcomeEmail, interviewInvite, cancelInvite, resetPassword, verifyEmail, teamInvite } from '../../templates';
 import { ResponseUtility } from '../utils/ResponseUtility';
-
-const sgMail = require('@sendgrid/mail');
 
 export const prepareTemplateAndSendEmail = async (template: string, body: any, c: any) => {
 	try {
@@ -90,34 +87,5 @@ export const prepareTemplateAndSendEmail = async (template: string, body: any, c
 	} catch (error: any) {
 		console.log('Error sending email:', error);
         return ResponseUtility.internalServerError(`Failed to send email. Error: ${error.message}`);
-	}
-};
-
-export const sendEmailWithSendgrid = async (fromEmail, toEmail, subject, html, c) => {
-	try {
-		sgMail.setApiKey(c.env.SG_API_KEY);
-
-		console.log('Sending email to ', toEmail);
-
-		let msg: any = {
-			to: toEmail,
-			from: fromEmail,
-			subject: subject,
-			html: html,
-			trackingSettings: {
-				clickTracking: {
-					enable: false,
-					enableText: false,
-				},
-				subscriptionTracking: {
-					enable: false,
-				},
-			},
-		};
-
-		await sgMail.send(msg);
-		return ResponseUtility.ok(null, 'Email Sent Successfully');
-	} catch (error: any) {
-		return ResponseUtility.internalServerError(error.message);
 	}
 };
